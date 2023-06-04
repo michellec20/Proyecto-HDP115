@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Gestionar Noticia</title>
+    <link rel="stylesheet" type="text/css" href="style.css">
+  </head>
+  <body>
+    <div class="container">
+      <h1 class="title">GESTIONAR NOTICIA</h1>
+      <hr class="line">
+    </div>
+  </body>
+  
+  
+  <body>
+    <div>
+      <label for="lista-anios">Seleccione el año:</label>
+      <select id="lista-anios">
+        <option value="">Año</option>
+        <option value="2021">2025</option>
+        <option value="2021">2024</option>
+        <option value="2023">2023</option>
+        <option value="2022">2022</option>
+        <option value="2021">2021</option>
+        <option value="2021">2020</option>
+        <option value="2021">2019</option>
+        <option value="2021">2018</option>
+        <!-- Agrega más años según sea necesario -->
+      </select>
+    </div>
+  
+    <script>
+      // Obtener el elemento select
+      var listaAnios = document.getElementById("lista-anios");
+  
+      // Agregar un evento de cambio al select
+      listaAnios.addEventListener("change", function() {
+        var selectedYear = listaAnios.value;
+        console.log("Año seleccionado:", selectedYear);
+        // Aquí puedes realizar cualquier acción adicional cuando se selecciona un año
+      });
+    </script>
+  </body>
+  
+  
+  <body>
+    <table>
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Fecha</th>
+          <th>Autor</th>
+          <th>Categoría</th>
+          <th>Título</th>
+          <th>Acciones</th>
+        </tr>
+      </thead>
+      <tbody id="tabla-body">
+        <tr>
+          <td contenteditable="true"></td>
+          <td contenteditable="true"></td>
+          <td contenteditable="true"></td>
+          <td contenteditable="true"></td>
+          <td contenteditable="true"></td>
+          <td>
+            <div class="actions">
+              <a href="#" onclick="eliminarFila(this)">Eliminar</a>
+              <a href="#" onclick="editarFila(this)">Editar</a>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  
+    <button id="agregar-noticia" onclick="agregarFila()">Agregar noticia</button>
+  
+    <script src="script.js"></script>
+  </body>
+  </html>
