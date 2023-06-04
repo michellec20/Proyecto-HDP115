@@ -1,0 +1,69 @@
+{% extends 'index.html' %}
+{% load static %}
+{% load widget_tweaks %}
+{% block head %} 
+{% endblock %}
+
+
+
+{% block content %} 
+<div class="container">
+    <div class="row">
+        <div class="col-md-6 col-md-offset-3">
+            <div class="form-panel panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">NOTICIAS</h3>
+                </div>
+                <div class="panel-body">
+                    <form id = "formulario" role="form" action="." method="POST">
+                        {% csrf_token %}
+                        <fieldset>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <p class="label-form">Título: </p>
+                                        {{noticia.titulo}} {{}}
+                                        <div class ="help-block"><p class="text-muted label-help-form"></p></div>
+                                    </div>
+                                    <div class="form-group">
+                                        <p class="label-form">Autor:</p>
+                                        {{noticia.autor}}
+                                        <div class ="help-block"><p class="text-muted label-help-form"></p></div>
+                                    </div>
+                                    <p class="label-form">Fecha:</p>
+                                        {{form.fecha|add_class:'form-control'|attr:'autocomplete:off'}}
+                                        <div class ="help-block"><p class="text-muted label-help-form"></p></div>
+                                    </div>
+                                    <div class="form-group">
+                                        <p class="label-form">{{form.categoria.label}}</p>
+                                        {{form.categoria}}
+                                        <div class ="help-block"><p class="text-muted label-help-form"></p></div>
+                                    </div>
+                                    <div class="form-group">
+                                        <p class="label-form">Contenido de la Noticia:</p>
+                                        {{form.contenido|add_class:'form-control'|attr:'rows:3' |attr:'colm:40'|attr:'autocomplete:off'}}
+                                        <div class ="help-block"><p class="text-muted label-help-form"></p></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </fieldset>
+                        <div class="row">
+                            <div class="col-md-2">
+                                <button type="submit" class="btn btn-primary btn-block"> Agregar </button>
+                            </div>
+                            <div class="col-md-2">
+                                <a class="btn btn-danger btn-block" href="javascript:history.back()"> Cancelar </a>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}
+
+
+
+{% block scripts %}
+{% endblock %}
