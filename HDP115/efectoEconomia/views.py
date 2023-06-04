@@ -45,10 +45,20 @@ class agregarNoticia(GroupRequiredMixin, CreateView):
             messages.success(self.request, 'Ocurrió un error al agregar la noticia')
         return HttpResponseRedirect(self.get_url_redirect())
     
-    class gestionarNoticia(GroupRequiredMixin, CreateView):
+    class gestionarNoticia(GroupRequiredMixin, TemplateView):
         group_required = [u'administrador']
-        @method_decorator(login_required)
-        def dispatch(self, request, *args, **kwargs):
-            context=super().get_context_data(**kwargs)
-            return super().dispatch(request, *args, **kwargs)
-        template_name = 'gestionarNoticia.html'
+    @method_decorator(login_required)
+
+    def dispatch(self, request, *args, **kwargs):
+        return super().dispatch(request, *args, **kwargs)
+
+    template_name = 'gestionarNoticia.html'
+    model = noticia
+
+    def get_success_url(self):
+        return reverse_lazy('home')
+    
+    def form_valid(self, form):
+        form.instance.usuario = self.request.user
+        return super().form_valid(form)
+        
