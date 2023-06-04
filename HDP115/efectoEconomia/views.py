@@ -44,3 +44,11 @@ class agregarNoticia(GroupRequiredMixin, CreateView):
             noticia.delete()
             messages.success(self.request, 'Ocurrió un error al agregar la noticia')
         return HttpResponseRedirect(self.get_url_redirect())
+    
+    class gestionarNoticia(GroupRequiredMixin, CreateView):
+        group_required = [u'administrador']
+        @method_decorator(login_required)
+        def dispatch(self, request, *args, **kwargs):
+            context=super().get_context_data(**kwargs)
+            return super().dispatch(request, *args, **kwargs)
+        template_name = 'gestionarNoticia.html'
