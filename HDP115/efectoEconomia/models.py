@@ -16,4 +16,6 @@ class noticia(models.Model):
         choices=tipo_categoria
     )
     contenido = models.TextField(max_length=500, default="", blank=True)
-    
+    def __str__(self):
+        texto = "{0} ({1})"
+        return texto.format(self.nombre, self.creditos)

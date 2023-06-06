@@ -1,0 +1,42 @@
+{% extends "./base.html" %}
+
+{% block title %} Gestion de Noticias {%endblock %}
+
+{% block body %}
+<div class="row">
+    <div class="col-md-4 offset-md-4">
+        <h2>Edicion de Noticias</h2>
+<div class="card">
+  <div class="card-body">
+    <form action="/editarNoticia/ " method="POST">{% csrf_token %}
+
+      <div class="form-group">
+        <input type="text" id="txtId" name="txtId" value="{{noticia.id}}" class="form-control" min="1" max="2" placeholder="Id" 
+         value="1" required >
+      </div>
+      <div class="form-group">
+        <input type="text" id="txtFecha" name="txtFecha" value="{{noticia.fecha}}" class="form-control" placeholder="Fecha" 
+         minlength="6" maxlength="10" required>
+      </div>
+      <div class="form-group">
+        <input type="text" id="txtAutor" name="txtAutor" value="{{noticia.autor}}" class="form-control" placeholder="Autor" 
+         minlength="6" maxlength="50" required>
+      </div>
+      <div class="form-group">
+        <input type="text" id="txtCategoria" name="txtCategoria" value="{{noticia.categoria}}" class="form-control" placeholder="Categoria" 
+         minlength="6" maxlength="50" required>
+      </div>
+      <div class="form-group">
+        <input type="text" id="txtTitulo" name="txtTitulo" value="{{noticia.titulo}}" class="form-control" placeholder="Titulo" 
+         minlength="6" maxlength="50" required>
+      </div>
+      <div class="form-group">
+        <button type="submit" class="btn btn-success btn block text-white">Guardar </button>
+      </div>
+
+    </form>
+  </div>
+</div>
+    </div>
+</div>
+{% endblock %}

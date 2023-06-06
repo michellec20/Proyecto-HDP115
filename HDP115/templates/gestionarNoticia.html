@@ -1,80 +1,82 @@
-{% extends 'index.html' %}
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Gestionar Noticia</title>
-    <link rel="stylesheet" type="text/css" href="style.css">
-  </head>
-  <body>
-    <div class="container">
-      <h1 class="title">GESTIONAR NOTICIA</h1>
-      <hr class="line">
+{% extends "./index.html" %}
+
+{% block title %} Gestion de Noticias {%endblock %}
+
+{% block body %}
+<div class = "row">
+  <div class="col-sm-12 col-md-6 col-lg-4 col-xl-4">
+    {% if messages %}
+    {% for message in messages %}
+    <div class="alert alert-dismissible alert-success">
+<button type="button" class="close" data-dismiss="alert">&times;</button>
+<strong class="text-dark">{{ message }}</strong>
     </div>
-  </body>
-  
-  
-  <body>
-    <div>
-      <label for="lista-anios">Seleccione el año:</label>
-      <select id="lista-anios">
-        <option value="">Año</option>
-        <option value="2021">2025</option>
-        <option value="2021">2024</option>
-        <option value="2023">2023</option>
-        <option value="2022">2022</option>
-        <option value="2021">2021</option>
-        <option value="2021">2020</option>
-        <option value="2021">2019</option>
-        <option value="2021">2018</option>
-        <!-- Agrega más años según sea necesario -->
-      </select>
-    </div>
-  
-    <script>
-      // Obtener el elemento select
-      var listaAnios = document.getElementById("lista-anios");
-  
-      // Agregar un evento de cambio al select
-      listaAnios.addEventListener("change", function() {
-        var selectedYear = listaAnios.value;
-        console.log("Año seleccionado:", selectedYear);
-        // Aquí puedes realizar cualquier acción adicional cuando se selecciona un año
-      });
-    </script>
-  </body>
-  
-  
-  <body>
-    <table>
-      <thead>
-        <tr>
-          <th>ID</th>
-          <th>Fecha</th>
-          <th>Autor</th>
-          <th>Categoría</th>
-          <th>Título</th>
-          <th>Acciones</th>
-        </tr>
-      </thead>
-      <tbody id="tabla-body">
-        <tr>
-          <td contenteditable="true"></td>
-          <td contenteditable="true"></td>
-          <td contenteditable="true"></td>
-          <td contenteditable="true"></td>
-          <td contenteditable="true"></td>
-          <td>
-            <div class="actions">
-              <a href="#" onclick="eliminarFila(this)">Eliminar</a>
-              <a href="#" onclick="editarFila(this)">Editar</a>
-            </div>
-          </td>
-        </tr>
-      </tbody>
-    </table>
-  
-    <button id="agregar-noticia" onclick="agregarFila()">Agregar noticia</button>
-  
-    <script src="script.js"></script>
-  </body>
-  </html>
+    {% endfor %}
+    {% endif %}
+<h2>Gestion de Noticias</h2>
+<div class="card">
+  <div class="card-body">
+    <form action="/registrarNoticia/ " method="POST">{% csrf_token %}
+
+      <div class="form-group">
+        <input type="text" id="txtId" name="txtId" class="form-control" min="1" max="2" placeholder="Id" 
+         value="1" required>
+      </div>
+      <div class="form-group">
+        <input type="text" id="txtFecha" name="txtFecha" class="form-control" placeholder="Fecha" 
+         minlength="6" maxlength="10" required>
+      </div>
+      <div class="form-group">
+        <input type="text" id="txtAutor" name="txtAutor" class="form-control" placeholder="Autor" 
+         minlength="6" maxlength="50" required>
+      </div>
+      <div class="form-group">
+        <input type="text" id="txtCategoria" name="txtCategoria" class="form-control" placeholder="Categoria" 
+         minlength="6" maxlength="50" required>
+      </div>
+      <div class="form-group">
+        <input type="text" id="txtTitulo" name="txtTitulo" class="form-control" placeholder="Titulo" 
+         minlength="6" maxlength="50" required>
+      </div>
+      <div class="form-group">
+        <button type="submit" class="btn btn-success btn block text-white">Guardar </button>
+      </div>
+
+    </form>
+  </div>
+
+</div>
+  </div>
+  <div class="col-sm-12 col-md-6 col-lg-8 col-xl-8">
+       <div class="table-responsive py-2">
+        <table class="table table-striped">
+         <thead>
+          <tr>
+            <th>#</th>
+            <th>Id</th>
+            <th>Fecha</th>
+            <th>Autor</th>
+            <th>Categoria</th>
+            <th>Titulo</th>
+            <th colspan="2">Acciones </th>
+          </tr>
+         </thead>
+         <tbody>
+          {% for c in noticias %}
+          <tr>
+            <td>{{forloop.counter}}</td>
+            <td>{{c.id}}</td>
+            <td>{{c.fecha}}</td>
+            <td>{{c.autor}}</td>
+            <td>{{c.categoria}}</td>
+            <td>{{c.titulo}}</td>
+            <td><a href="edicionNoticia/{{c.id}}" class="btn btn-info">Editar</a></td>
+            <td><a href="eliminarNoticia/{{c.id}}" class="btn btn-danger btnEliminacion">Eliminar</a></td>
+          </tr>
+          {% endfor %}
+         </tbody>
+        </table>
+       </div>
+  </div>
+</div>
+{% endblok %}
