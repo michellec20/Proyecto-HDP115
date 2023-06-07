@@ -14,21 +14,15 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path
+from django.urls import path, include
 from django.contrib.staticfiles.urls import staticfiles_urlpatterns
-from efectoEconomia.views import *
-from django.contrib.auth.views import LoginView,LogoutView
-from . import views
+
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('',index.as_view(), name='home'),
-    path('accounts/login/', LoginView.as_view(template_name='login.html'), name='login'),
-    path('logout/', LogoutView.as_view(template_name='logout.html'), name='logout'),
-    path('gestionarNoticia/',gestionarNoticia.as_view(template_name='gestionarNoticia.html'), name='gestionarNoticia'),
-    path('agregarNoticia/',agregarNoticia.as_view(template_name='agregarNoticia'), name='agregarNoticia'),
-    path('registrarNoticia/', views.registrarNoticia),
-    path('edicionNoticia/<id>', views.edicionNoticia),
-    path('editarCurso/', views.editarNoticia),
-    path('eliminarNoticia/<id>', views.eliminarNoticia),
+    path('', include('efectoEconomia.urls')),
+    #path('registrarNoticia/', views.registrarNoticia),
+    #path('edicionNoticia/<id>', views.edicionNoticia),
+    #path('editarCurso/', views.editarNoticia),
+    #path('eliminarNoticia/<id>', views.eliminarNoticia),
 ]
