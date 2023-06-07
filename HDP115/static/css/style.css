@@ -97,7 +97,7 @@ input[type=number] { -moz-appearance:textfield; }
 
 .nav > li > a{
     padding: 20px 15px !important;
-    color: black;
+    color:black;
     font-size: medium;
 }
 
