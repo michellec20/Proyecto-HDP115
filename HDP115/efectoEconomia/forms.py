@@ -1,6 +1,5 @@
-from pyexpat import model
 from django import forms
-from .models import noticia
+from efectoEconomia.models import noticia
 
 class DateInput(forms.DateInput): 
     input_type = 'date'
@@ -10,18 +9,12 @@ class NoticiaForm(forms.ModelForm):
 
     class Meta:
         model = noticia
-        fields = ('titulo','autor','fecha','categoria','contenido')
+        fields = ('titulo','autor','fecha','tipo_categoria','contenido')
+        widgets = { 'fecha': DateInput(), }
         label = {
             
             'titulo':('Título de la noticia'),
             'autor':('Autor de la noticia'),
-            'categoria': ('Categoria de la noticia'),
             'contenido': ('Contenido de la noticia')
-            
-        }
-        help_texts ={
-           
-            'nombre':('Campo obligatorio'),
-            'apellido':('Campo obligatorio'),
             
         }
