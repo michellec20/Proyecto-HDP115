@@ -1,8 +1,7 @@
 {% extends "./index.html" %}
 
-{% block title %} Gestion de Noticias {%endblock %}
+{% block title %} Gestionar Noticias {% endblock %}
 
-{% block body %}
 <div class = "row">
   <div class="col-sm-12 col-md-6 col-lg-4 col-xl-4">
     {% if messages %}
@@ -13,11 +12,11 @@
     </div>
     {% endfor %}
     {% endif %}
-<h2>Gestion de Noticias</h2>
+<h2>Gestionar Noticias</h2>
 <div class="card">
   <div class="card-body">
-    <form action="/registrarNoticia/ " method="POST">{% csrf_token %}
-
+    <form action="/gestionarNoticia/ " method="POST">
+      {% csrf_token %}
       <div class="form-group">
         <input type="text" id="txtId" name="txtId" class="form-control" min="1" max="2" placeholder="Id" 
          value="1" required>
@@ -62,16 +61,16 @@
           </tr>
          </thead>
          <tbody>
-          {% for c in noticias %}
+          {% for c in noticia %}
           <tr>
             <td>{{forloop.counter}}</td>
             <td>{{c.id}}</td>
             <td>{{c.fecha}}</td>
             <td>{{c.autor}}</td>
-            <td>{{c.categoria}}</td>
+            <td>{{c.tipo_categoria}}</td>
             <td>{{c.titulo}}</td>
-            <td><a href="edicionNoticia/{{c.id}}" class="btn btn-info">Editar</a></td>
-            <td><a href="eliminarNoticia/{{c.id}}" class="btn btn-danger btnEliminacion">Eliminar</a></td>
+            <td><a href="/edicionNoticia/{{c.id}}" class="btn btn-info">Editar</a></td>
+            <td><a href="/eliminarNoticia/{{c.id}}" class="btn btn-danger btnEliminacion">Eliminar</a></td>
           </tr>
           {% endfor %}
          </tbody>
@@ -79,4 +78,3 @@
        </div>
   </div>
 </div>
-{% endblok %}
