@@ -12,7 +12,8 @@
         <div class="col-md-6 col-md-offset-3">
             <div class="form-panel panel panel-default">
                 <div class="panel-heading">
-                    <h3 class="panel-title">NOTICIAS</h3>
+                    <h3 class="panel-title" style="color: #597eaa;"><b>NOTICIAS</b></h3>
+                    <br>
                 </div>
                 <div class="panel-body">
                     <form id = "formulario" role="form" action="." method="POST">
@@ -22,12 +23,12 @@
                                 <div class="col-md-12">
                                     <div class="form-group">
                                         <p class="label-form">Título: </p>
-                                        {{noticia.titulo}} 
+                                        {{form.titulo|add_class:'form-control'|attr:'autocomplete:off'|attr:'placeholder: Ingrese título de la noticia'}}
                                         <div class ="help-block"><p class="text-muted label-help-form"></p></div>
                                     </div>
                                     <div class="form-group">
                                         <p class="label-form">Autor:</p>
-                                        {{noticia.autor}}
+                                        {{form.autor|add_class:'form-control'|attr:'autocomplete:off'|attr:'placeholder: Ingrese autor de la noticia'}}
                                         <div class ="help-block"><p class="text-muted label-help-form"></p></div>
                                     </div>
                                     <p class="label-form">Fecha:</p>
@@ -35,8 +36,8 @@
                                         <div class ="help-block"><p class="text-muted label-help-form"></p></div>
                                     </div>
                                     <div class="form-group">
-                                        <p class="label-form">{{form.categoria.label}}</p>
-                                        {{form.categoria}}
+                                        <p class="label-form">Categoría:</p>
+                                        {{form.tipo_categoria}}
                                         <div class ="help-block"><p class="text-muted label-help-form"></p></div>
                                     </div>
                                     <div class="form-group">
@@ -48,10 +49,8 @@
                             </div>
                         </fieldset>
                         <div class="row">
-                            <div class="col-md-2">
+                            <div class="text-center">
                                 <button type="submit" class="btn btn-primary btn-block"> Agregar </button>
-                            </div>
-                            <div class="col-md-2">
                                 <a class="btn btn-danger btn-block" href="javascript:history.back()"> Cancelar </a>
                             </div>
                         </div>
