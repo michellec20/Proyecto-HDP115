@@ -41,8 +41,15 @@
                                         <div class ="help-block"><p class="text-muted label-help-form"></p></div>
                                     </div>
                                     <div class="form-group">
+                                        <p class="label-form">Imagen:</p>
+                                        {{form.imagen}}
+                                        <div class="help-block">
+                                            <p class="text-muted label-help-form"></p>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
                                         <p class="label-form">Contenido de la Noticia:</p>
-                                        {{form.contenido|add_class:'form-control'|attr:'rows:3' |attr:'colm:40'|attr:'autocomplete:off'}}
+                                        {{form.contenido|add_class:'form-control'|attr:'rows:10' |attr:'colm:40'|attr:'autocomplete:off'}}
                                         <div class ="help-block"><p class="text-muted label-help-form"></p></div>
                                     </div>
                                 </div>

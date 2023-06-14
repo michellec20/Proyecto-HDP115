@@ -1,80 +1,113 @@
-{% extends "./index.html" %}
+{% extends 'index.html' %}
+{% load static %}
+{% load my_filters %}
 
-{% block title %} Gestionar Noticias {% endblock %}
+{% block head %}
+{% endblock %}
 
-<div class = "row">
-  <div class="col-sm-12 col-md-6 col-lg-4 col-xl-4">
-    {% if messages %}
-    {% for message in messages %}
-    <div class="alert alert-dismissible alert-success">
-<button type="button" class="close" data-dismiss="alert">&times;</button>
-<strong class="text-dark">{{ message }}</strong>
+{% block content %}
+<div class="container">
+  <div class="row justify-content-center"> <!-- Agrega la clase "justify-content-center" para centrar el contenido -->
+    <div class="col-md-6">
+      <div class="form-panel panel panel-default">
+
+        <div class="panel-heading text-center"> <!-- Agrega la clase "text-center" para centrar el contenido del panel-heading -->
+          <h3 class="panel-title" style="color: #597eaa;"><b>GESTIONAR NOTICIAS</b></h3>
+        </div>
+      </div>
     </div>
-    {% endfor %}
-    {% endif %}
-<h2>Gestionar Noticias</h2>
-<div class="card">
-  <div class="card-body">
-    <form action="/gestionarNoticia/ " method="POST">
-      {% csrf_token %}
-      <div class="form-group">
-        <input type="text" id="txtId" name="txtId" class="form-control" min="1" max="2" placeholder="Id" 
-         value="1" required>
-      </div>
-      <div class="form-group">
-        <input type="text" id="txtFecha" name="txtFecha" class="form-control" placeholder="Fecha" 
-         minlength="6" maxlength="10" required>
-      </div>
-      <div class="form-group">
-        <input type="text" id="txtAutor" name="txtAutor" class="form-control" placeholder="Autor" 
-         minlength="6" maxlength="50" required>
-      </div>
-      <div class="form-group">
-        <input type="text" id="txtCategoria" name="txtCategoria" class="form-control" placeholder="Categoria" 
-         minlength="6" maxlength="50" required>
-      </div>
-      <div class="form-group">
-        <input type="text" id="txtTitulo" name="txtTitulo" class="form-control" placeholder="Titulo" 
-         minlength="6" maxlength="50" required>
-      </div>
-      <div class="form-group">
-        <button type="submit" class="btn btn-success btn block text-white">Guardar </button>
-      </div>
-
-    </form>
-  </div>
-
-</div>
-  </div>
-  <div class="col-sm-12 col-md-6 col-lg-8 col-xl-8">
-       <div class="table-responsive py-2">
-        <table class="table table-striped">
-         <thead>
-          <tr>
-            <th>#</th>
-            <th>Id</th>
-            <th>Fecha</th>
-            <th>Autor</th>
-            <th>Categoria</th>
-            <th>Titulo</th>
-            <th colspan="2">Acciones </th>
-          </tr>
-         </thead>
-         <tbody>
-          {% for c in noticia %}
-          <tr>
-            <td>{{forloop.counter}}</td>
-            <td>{{c.id}}</td>
-            <td>{{c.fecha}}</td>
-            <td>{{c.autor}}</td>
-            <td>{{c.tipo_categoria}}</td>
-            <td>{{c.titulo}}</td>
-            <td><a href="/edicionNoticia/{{c.id}}" class="btn btn-info">Editar</a></td>
-            <td><a href="/eliminarNoticia/{{c.id}}" class="btn btn-danger btnEliminacion">Eliminar</a></td>
-          </tr>
-          {% endfor %}
-         </tbody>
-        </table>
-       </div>
   </div>
 </div>
+<br>
+<div class="panel-body">
+  <form id="formulario" role="form" action="." method="POST">
+    {% csrf_token %}
+    <fieldset>
+      <div class="row justify-content-center"> <!-- Agrega la clase "justify-content-center" para centrar el contenido -->
+        <div class="col-md-6">
+          <table class="table">
+            <thead>
+              <tr> 
+                <th>Id</th>
+                <th>Fecha</th>
+                <th>Autor</th>
+                <th>Categoría</th>
+                <th>Título</th>
+                <th>Acciones</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for n in noticia %}
+              <tr>
+                <td>{{ n.idnoticia }}</td>
+                <td>{{ n.fecha }}</td>
+                <td>{{ n.autor }}</td>
+                <td>{{ n.tipo_categoria|get_categoria_nombre }}</td>
+                <td>{{ n.titulo }}</td>
+                <td>
+                  <a href="/editarNoticia/{{ n.idnoticia }}" class="btn btn-info btnEditar">Editar</a>
+                </td>
+                <td>
+                  <a href="/eliminarNoticia/{{ n.idnoticia }}" class="btn btn-danger btnEliminacion">Eliminar</a>
+                </td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </fieldset>
+  </form>
+</div>
+ 
+{% endblock content %}
+
+
+
+{% block scripts %}
+<!-- DataTables JavaScript -->
+<script src="{% static 'js/dataTables/jquery.dataTables.min.js'%}"></script>
+<script src="{% static 'js/dataTables/dataTables.bootstrap.min.js'%}"></script>
+<script type=application/javascript>
+    {%if messages%}
+        var msg = '';
+        var msg1 = '';
+        {%for message in messages%}
+        {% if 'error' in message.tags %}
+            msg += '{{ message }}\n';
+          {% endif %}
+        {% endfor %}
+        if(msg != ''){
+        Swal.fire({
+            icon: 'error',
+            text: msg,
+            //footer: '<a href="">Why do I have this issue?</a>'
+          })
+        }
+        {%for message in messages%}
+        {% if 'success' in message.tags %}
+            msg1 += '{{ message }}\n';
+          {% endif %}
+        {% endfor %}
+        if(msg1 != ''){
+            Swal.fire({
+                icon: 'success',
+                text: msg1,
+              })
+        }
+    {% endif %} 
+  </script>
+
+<script type="text/javascript">
+  $(document).ready(function() {
+    $('.table').DataTable();
+
+    // Manejar el evento de clic en los botones de clase "btnEditar"
+    $('.table').on('click', '.btnEditar', function(e) {
+      e.preventDefault();
+      var url = $(this).attr('href');
+      window.location.href = url;
+    });
+  });
+</script>
+{% endblock %}

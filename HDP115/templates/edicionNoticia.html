@@ -1,42 +1,53 @@
-{% extends "./base.html" %}
+{% extends 'index.html' %}
+{% load static %}
+{% load my_filters %}
 
-{% block title %} Gestion de Noticias {%endblock %}
+{% block head %}
+<!-- Aquí puedes agregar tus etiquetas de encabezado si es necesario -->
+{% endblock %}
 
-{% block body %}
-<div class="row">
-    <div class="col-md-4 offset-md-4">
-        <h2>Edicion de Noticias</h2>
-<div class="card">
-  <div class="card-body">
-    <form action="/editarNoticia/ " method="POST">{% csrf_token %}
-
-      <div class="form-group">
-        <input type="text" id="txtId" name="txtId" value="{{noticia.id}}" class="form-control" min="1" max="2" placeholder="Id" 
-         value="1" required >
+{% block content %}
+<div class="container">
+  <div class="row">
+    <div class="col-md-6 col-md-offset-3">
+      <div class="form-panel panel panel-default">
+        <div class="panel-heading">
+          <h3 class="panel-title" style="color: #597eaa;"><b>EDITAR NOTICIA</b></h3>
+          <br>
+          <br>
+        </div>
+        <div class="panel-body">
+          <form action="/editarNoticia/ " method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            <fieldset>
+              <div class="form-group">
+                <label for="titulo" class="label-form">Título:</label>
+                <input type="text" class="form-control" id="titulo" name="titulo" autocomplete="off" placeholder="Ingrese título de la noticia" value="{{ noticia.titulo }}">
+                <div class="help-block">
+                    <p class="text-muted label-help-form"></p>
+                </div>
+            </div>
+            <div class="form-group">
+              <label for="autor">Autor:</label>
+              <textarea class="form-control" id="autor" name="autor">{{ noticia.autor }}</textarea>
+            </div>
+            <div class="form-group">
+              <label for="tipo_categoria">Categoria:</label>
+              <textarea class="form-control" id="tipo_categoria" name="tipo_categoria">{{ noticia.tipo_categoria|get_categoria_nombre }}</textarea>
+            </div>
+            
+            <div class="form-group">
+              <label for="contenido">Contenido:</label>
+              <textarea class="form-control" id="contenido" name="contenido" rows="10">{{ noticia.contenido }}</textarea>
+            </div>
+              <br>
+              <button type="submit" class="btn btn-primary">Guardar</button>
+              <a href="{% url 'gestionarNoticia' %}" class="btn btn-danger btn-block">Cancelar</a>
+            </fieldset>
+          </form>
+        </div>
       </div>
-      <div class="form-group">
-        <input type="text" id="txtFecha" name="txtFecha" value="{{noticia.fecha}}" class="form-control" placeholder="Fecha" 
-         minlength="6" maxlength="10" required>
-      </div>
-      <div class="form-group">
-        <input type="text" id="txtAutor" name="txtAutor" value="{{noticia.autor}}" class="form-control" placeholder="Autor" 
-         minlength="6" maxlength="50" required>
-      </div>
-      <div class="form-group">
-        <input type="text" id="txtCategoria" name="txtCategoria" value="{{noticia.categoria}}" class="form-control" placeholder="Categoria" 
-         minlength="6" maxlength="50" required>
-      </div>
-      <div class="form-group">
-        <input type="text" id="txtTitulo" name="txtTitulo" value="{{noticia.titulo}}" class="form-control" placeholder="Titulo" 
-         minlength="6" maxlength="50" required>
-      </div>
-      <div class="form-group">
-        <button type="submit" class="btn btn-success btn block text-white">Guardar </button>
-      </div>
-
-    </form>
+    </div>
   </div>
 </div>
-    </div>
-</div>
-{% endblock %}
+{% endblock content %}
