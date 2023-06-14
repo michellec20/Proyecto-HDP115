@@ -11,6 +11,7 @@ from .mixins import *
 from django.views.generic import CreateView, TemplateView, ListView
 from django.http import HttpResponse, HttpResponseRedirect
 from django.db.models import Q
+from django.shortcuts import render, get_object_or_404, redirect
 
 
 # Create your views here.
@@ -45,7 +46,7 @@ class agregarNoticia(GroupRequiredMixin, CreateView):
         
         try:
             form.save()
-            messages.success(self.request, 'La noticia fue agregada con exito')
+            messages.success(self.request, 'La noticia fue agregada con éxito')
         except Exception:
             noticia.delete()
             messages.success(self.request, 'Ocurrió un error al agregar la noticia')
@@ -64,9 +65,30 @@ class gestionarNoticia(GroupRequiredMixin, View):
     form_class = NoticiaForm
 
     def get(self, request):
-        noticia_obj = noticia.objects.all()  # Obtén todas las noticias del modelo
-        context = {'noticias': noticia_obj}
-        return render(request, self.template_name, context)
+        noticias = noticia.objects.all()  # Obtiene las noticias
+
+        context = {
+            'noticia': noticias,
+        }
+        return render(request, 'gestionarNoticia.html', context)
+    
+def edicion_noticia(request, idnoticia):
+    noticias = get_object_or_404(noticia, idnoticia= idnoticia)
+
+    if request.method == 'POST':
+        form = NoticiaForm(request.POST, instance=noticia)
+        if form.is_valid():
+            form.save()
+            return redirect('noticias')
+    else:
+        form = NoticiaForm(instance=noticia)
+    
+    context = {
+        'noticia': noticias,
+        'form': form,
+    }
+    return render(request, 'edicionNoticia.html', context)
+                                                                                
     
     """def get_success_url(self):
         return reverse_lazy('home')
@@ -77,11 +99,10 @@ class gestionarNoticia(GroupRequiredMixin, View):
         
     def get(self, request):
         noticiasListados = noticia.objects.all()
-        messages.success(request, '¡Noticia Listada!')
         return render(request, "gestionarNoticia.html", {"noticias": noticiasListados})
     
     def post(self, request):
-        id = request.POST['txtId']
+        idnoticia = request.POST['txtId']
         fecha = request.POST['txtFecha']
         autor = request.POST['txtAutor']
         categoria = request.POST['txtCategoria']
@@ -97,16 +118,16 @@ class gestionarNoticia(GroupRequiredMixin, View):
         return render(request, "edicionNoticia.html", {"noticia": noticia_obj})
     
     def editarNoticia(self, request):
-        id=request.POST['txtId']
+        idnoticia=request.POST['txtId']
         fecha=request.POST['txtFecha']
         autor=request.POST['txtAutor']
-        categoria=request.POST['txtCategoria']
+        tipo_categoria=request.POST['txtCategoria']
         titulo=request.POST['txtTitulo']
 
         noticia_obj = noticia.objects.get(id=id)
         noticia_obj.fecha = fecha
         noticia_obj.autor = autor
-        noticia_obj.categoria = categoria
+        noticia_obj.tipo_categoria= tipo_categoria
         noticia_obj.titulo = titulo
         noticia_obj.save()
 
