@@ -24,8 +24,9 @@
     {% csrf_token %}
     <fieldset>
       <div class="row justify-content-center"> <!-- Agrega la clase "justify-content-center" para centrar el contenido -->
-        <div class="col-md-6">
-          <table class="table">
+        <div class="col-sm-12 col-md-6 col-lg-8 col-xl-8">
+        <div class="table-responsive py-2">
+          <table class="table table-striped">
             <thead>
               <tr> 
                 <th>Id</th>
@@ -33,7 +34,7 @@
                 <th>Autor</th>
                 <th>Categoría</th>
                 <th>Título</th>
-                <th>Acciones</th>
+                <th colspan="2">Acciones</th>
               </tr>
             </thead>
             <tbody>
@@ -44,17 +45,14 @@
                 <td>{{ n.autor }}</td>
                 <td>{{ n.tipo_categoria|get_categoria_nombre }}</td>
                 <td>{{ n.titulo }}</td>
-                <td>
-                  <a href="/editarNoticia/{{ n.idnoticia }}" class="btn btn-info btnEditar">Editar</a>
-                </td>
-                <td>
-                  <a href="/eliminarNoticia/{{ n.idnoticia }}" class="btn btn-danger btnEliminacion">Eliminar</a>
-                </td>
+                <td><a href="/editarNoticia/{{ n.idnoticia }}" class="btn btn-info btnEditar">Editar</a></td>
+                <td><a href="/eliminarNoticia/{{ n.idnoticia }}" class="btn btn-danger btnEliminacion" onclick="return eliminar();">Eliminar</a></td>
               </tr>
               {% endfor %}
             </tbody>
           </table>
         </div>
+       </div>
       </div>
     </fieldset>
   </form>
@@ -109,5 +107,15 @@
       window.location.href = url;
     });
   });
+</script>
+
+<script type="text/javascript">
+  function eliminar() {
+    var x = confirm("¿Desea eliminar la noticia?");
+    if (x)
+      return true;
+    else
+      return false;
+  }
 </script>
 {% endblock %}

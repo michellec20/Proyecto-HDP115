@@ -3,7 +3,7 @@
 {% load my_filters %}
 
 {% block head %}
-<!-- Aquí puedes agregar tus etiquetas de encabezado si es necesario -->
+
 {% endblock %}
 
 {% block content %}
@@ -19,30 +19,10 @@
         <div class="panel-body">
           <form action="/editarNoticia/ " method="POST" enctype="multipart/form-data">
             {% csrf_token %}
-            <fieldset>
-              <div class="form-group">
-                <label for="titulo" class="label-form">Título:</label>
-                <input type="text" class="form-control" id="titulo" name="titulo" autocomplete="off" placeholder="Ingrese título de la noticia" value="{{ noticia.titulo }}">
-                <div class="help-block">
-                    <p class="text-muted label-help-form"></p>
-                </div>
-            </div>
-            <div class="form-group">
-              <label for="autor">Autor:</label>
-              <textarea class="form-control" id="autor" name="autor">{{ noticia.autor }}</textarea>
-            </div>
-            <div class="form-group">
-              <label for="tipo_categoria">Categoria:</label>
-              <textarea class="form-control" id="tipo_categoria" name="tipo_categoria">{{ noticia.tipo_categoria|get_categoria_nombre }}</textarea>
-            </div>
             
-            <div class="form-group">
-              <label for="contenido">Contenido:</label>
-              <textarea class="form-control" id="contenido" name="contenido" rows="10">{{ noticia.contenido }}</textarea>
-            </div>
-              <br>
-              <button type="submit" class="btn btn-primary">Guardar</button>
-              <a href="{% url 'gestionarNoticia' %}" class="btn btn-danger btn-block">Cancelar</a>
+            {{ form.as_p }}
+            <button type="submit" class="btn btn-primary">Guardar</button>
+            <a class="btn btn-danger btn-block" href="{% url 'gestionarNoticia' %}"> Cancelar </a>
             </fieldset>
           </form>
         </div>
