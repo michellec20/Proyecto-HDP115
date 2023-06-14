@@ -71,8 +71,26 @@ class gestionarNoticia(GroupRequiredMixin, View):
             'noticia': noticias,
         }
         return render(request, 'gestionarNoticia.html', context)
-    
+
 def edicion_noticia(request, idnoticia):
+    noticias = noticia.objects.get(idnoticia=idnoticia)
+    form = NoticiaForm(instance=noticias)
+    return render(request, 'edicionNoticia.html', {'form': form})
+
+def eliminarNoticia(request, idnoticia):
+    if request.method == 'POST':
+        # Realiza la eliminación de la noticia
+        noticias = noticia.objects.get(idnoticia=idnoticia)
+        noticias.delete()
+
+        messages.success(request, '¡Noticia eliminada correctamente!')
+        return redirect('gestionarNoticia')
+
+    # Si se accede a la URL mediante GET o cualquier otro método, redirige a la página de gestión de noticias
+    return redirect('gestionarNoticia')
+    
+    
+'''def edicion_noticia(request, idnoticia):
     noticias = get_object_or_404(noticia, idnoticia= idnoticia)
 
     if request.method == 'POST':
@@ -90,7 +108,7 @@ def edicion_noticia(request, idnoticia):
     return render(request, 'edicionNoticia.html', context)
                                                                                 
     
-    """def get_success_url(self):
+    def get_success_url(self):
         return reverse_lazy('home')
     
     def form_valid(self, form):
@@ -135,13 +153,7 @@ def edicion_noticia(request, idnoticia):
 
         return redirect('/')
     
-    def eliminarNoticia(request, id):
-        noticia_obj = noticia.objects.get(id=id)
-        noticia_obj.delete()
-
-        messages.success(request, '¡Noticia Eliminada!')
-
-        return redirect('/')"""
+    '''
     
     
     

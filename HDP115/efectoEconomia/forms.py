@@ -12,7 +12,6 @@ class NoticiaForm(forms.ModelForm):
         fields = ('titulo','autor','fecha','tipo_categoria', 'imagen','contenido')
         widgets = { 
             'fecha': DateInput(), 
-            'tipo_categoria': forms.Select(attrs={'class': 'form-control'})
             }
         label = {
             
