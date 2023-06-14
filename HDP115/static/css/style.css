@@ -136,3 +136,8 @@ h3::after {
     background-color: #597eaa;
 }
 
+.input-lg {
+    height: 40px;
+    font-size: 18px;
+    padding: 8px 12px;
+}
