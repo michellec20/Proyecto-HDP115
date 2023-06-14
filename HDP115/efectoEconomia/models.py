@@ -16,6 +16,7 @@ class noticia(models.Model):
         choices=tipo_categoria
     )
     contenido = models.TextField(max_length=500, default="", blank=True)
+    imagen = models.ImageField(upload_to='img/', null=True, blank=True)
     
     def __str__(self):
         return '{}'.format(self.titulo)

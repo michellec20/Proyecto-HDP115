@@ -9,8 +9,11 @@ class NoticiaForm(forms.ModelForm):
 
     class Meta:
         model = noticia
-        fields = ('titulo','autor','fecha','tipo_categoria','contenido')
-        widgets = { 'fecha': DateInput(), }
+        fields = ('titulo','autor','fecha','tipo_categoria', 'imagen','contenido')
+        widgets = { 
+            'fecha': DateInput(), 
+            'tipo_categoria': forms.Select(attrs={'class': 'form-control'})
+            }
         label = {
             
             'titulo':('Título de la noticia'),
@@ -18,3 +21,4 @@ class NoticiaForm(forms.ModelForm):
             'contenido': ('Contenido de la noticia')
             
         }
+        imagen = forms.ImageField(required=False)
