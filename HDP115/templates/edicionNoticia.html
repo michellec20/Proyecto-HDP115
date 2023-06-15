@@ -17,7 +17,7 @@
           <br>
         </div>
         <div class="panel-body">
-          <form action="/editarNoticia/ " method="POST" enctype="multipart/form-data">
+          <form action="/editarNoticia/{{ noticia.idnoticia }}/" method="POST" enctype="multipart/form-data">
             {% csrf_token %}
             
             {{ form.as_p }}

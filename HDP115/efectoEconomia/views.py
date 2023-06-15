@@ -72,9 +72,16 @@ class gestionarNoticia(GroupRequiredMixin, View):
         }
         return render(request, 'gestionarNoticia.html', context)
 
-def edicion_noticia(request, idnoticia):
-    noticias = noticia.objects.get(idnoticia=idnoticia)
-    form = NoticiaForm(instance=noticias)
+def editarNoticia(request, idnoticia):
+    noticia_obj = noticia.objects.get(idnoticia=idnoticia)
+    if request.method == 'POST':
+        form = NoticiaForm(request.POST, instance=noticia_obj)
+        if form.is_valid():
+            form.save()
+            messages.success(request, '¡Noticia Actualizada!')
+            return redirect('gestionarNoticia')
+    else:
+        form = NoticiaForm(instance=noticia_obj)
     return render(request, 'edicionNoticia.html', {'form': form})
 
 def eliminarNoticia(request, idnoticia):
